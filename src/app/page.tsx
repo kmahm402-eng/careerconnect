@@ -2,34 +2,37 @@
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-brand-dark">
-      <nav className="flex items-center justify-between px-6 py-4 border-b border-white/5">
-        <div className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-brand-gold to-brand-gold-light flex items-center justify-center">
-            <span className="text-brand-dark font-black text-lg">C</span>
-          </div>
-          <span className="font-extrabold text-white text-lg">Career</span>
-          <span className="font-extrabold text-brand-gold text-lg">Connect</span>
-        </div>
-        <div className="flex items-center gap-4">
-          <Link href="/auth/login" className="text-sm text-white/60 hover:text-white transition">Login</Link>
-          <Link href="/auth/register" className="px-5 py-2 bg-brand-cta text-white rounded-lg text-sm font-bold hover:bg-brand-cta-hover transition shadow-lg shadow-brand-cta/30">Sign Up Free</Link>
+    <div className="min-h-screen bg-background">
+      <nav className="max-w-4xl mx-auto flex items-center justify-between px-6 py-5">
+        <span className="font-bold text-xl text-primary">CareerConnect</span>
+        <div className="flex items-center gap-3">
+          <Link href="/auth/login" className="text-sm text-muted-foreground hover:text-foreground transition">Login</Link>
+          <Link href="/auth/register" className="px-4 py-2 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:opacity-90 transition shadow-soft">Sign Up</Link>
         </div>
       </nav>
-      <section className="max-w-4xl mx-auto px-6 pt-24 pb-16">
-        <h1 className="text-5xl font-black text-white leading-tight mb-6 tracking-tight">
-          Find your next<br />
-          <span className="bg-gradient-to-r from-brand-gold to-brand-gold-light bg-clip-text text-transparent">great workplace.</span>
+      <section className="max-w-4xl mx-auto px-6 pt-20 pb-16">
+        <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mb-5 tracking-tight text-foreground">
+          Your skills deserve<br />
+          <span className="text-primary">a better workplace.</span>
         </h1>
-        <p className="text-white/50 text-lg leading-relaxed mb-10 max-w-xl">Anonymous SNS and direct recruiting platform for mobile industry professionals. Zero middleman fees.</p>
-        <div className="flex gap-4 flex-wrap">
-          <Link href="/auth/register" className="px-8 py-4 bg-brand-cta text-white rounded-xl text-lg font-bold hover:bg-brand-cta-hover transition shadow-xl shadow-brand-cta/40">Get Started Free</Link>
-          <Link href="/auth/login" className="px-8 py-4 bg-white/5 text-white rounded-xl text-lg font-semibold border border-white/15 hover:bg-white/10 transition">Login</Link>
+        <p className="text-muted-foreground text-lg leading-relaxed mb-10 max-w-lg">Anonymous SNS and direct recruiting. Zero middleman fees. Connect with verified employers directly.</p>
+        <div className="flex gap-3">
+          <Link href="/auth/register" className="px-6 py-3 bg-primary text-primary-foreground rounded-xl text-base font-semibold hover:opacity-90 transition shadow-soft-md">Get Started Free</Link>
+          <Link href="/auth/login" className="px-6 py-3 bg-secondary text-foreground rounded-xl text-base font-medium hover:bg-secondary/80 transition">Login</Link>
         </div>
       </section>
-      <footer className="max-w-4xl mx-auto px-6 py-8 border-t border-white/5">
-        <p className="text-white/20 text-xs text-center">CareerConnect Inc.</p>
-      </footer>
+      <section className="max-w-4xl mx-auto px-6 py-16">
+        <div className="grid md:grid-cols-3 gap-4">
+          {[{ t: "Anonymous", d: "Post and interact with full privacy. Your identity stays hidden.", i: "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" }, { t: "24h Posts", d: "Share freely. Posts disappear in 24 hours like stories.", i: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" }, { t: "Direct Connect", d: "No middleman. Companies scout you directly. Zero fees.", i: "M13 10V3L4 14h7v7l9-11h-7z" }].map((f, i) => (
+            <div key={i} className="bg-card rounded-2xl border p-6">
+              <svg className="w-8 h-8 text-primary mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d={f.i} /></svg>
+              <h3 className="font-semibold mb-2">{f.t}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{f.d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+      <footer className="max-w-4xl mx-auto px-6 py-8 border-t"><p className="text-muted-foreground text-xs text-center">CareerConnect Inc.</p></footer>
     </div>
   );
 }

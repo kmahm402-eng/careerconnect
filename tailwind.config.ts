@@ -1,24 +1,12 @@
-import type { Config } from "tailwindcss";
+﻿import type { Config } from "tailwindcss";
 
 const config: Config = {
   darkMode: ["class"],
-  content: [
-    "./src/app/**/*.{ts,tsx}",
-    "./src/components/**/*.{ts,tsx}",
-  ],
+  content: ["./src/app/**/*.{ts,tsx}", "./src/components/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        // CareerConnect Brand Colors
-        brand: {
-          dark: "#0B1426",
-          navy: "#1A2D52",
-          gold: "#D4A853",
-          "gold-light": "#E8C97A",
-          cta: "#E8652D",
-          "cta-hover": "#D45520",
-        },
-        // Functional
+        brand: { indigo: "#4F46E5", amber: "#F59E0B" },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: { DEFAULT: "hsl(var(--card))", foreground: "hsl(var(--card-foreground))" },
@@ -32,22 +20,14 @@ const config: Config = {
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
       },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+      borderRadius: { lg: "var(--radius)", md: "calc(var(--radius) - 2px)", sm: "calc(var(--radius) - 4px)" },
+      fontFamily: { sans: ["Inter", "Noto Sans JP", "sans-serif"] },
+      boxShadow: {
+        soft: "0 2px 20px rgba(0,0,0,0.04)",
+        "soft-md": "0 4px 30px rgba(0,0,0,0.06)",
+        "soft-lg": "0 8px 40px rgba(0,0,0,0.08)",
       },
-      fontFamily: {
-        sans: ["Outfit", "Noto Sans JP", "sans-serif"],
-      },
-      keyframes: {
-        "fade-in": { from: { opacity: "0", transform: "translateY(8px)" }, to: { opacity: "1", transform: "translateY(0)" } },
-        "slide-in": { from: { transform: "translateX(-100%)" }, to: { transform: "translateX(0)" } },
-      },
-      animation: {
-        "fade-in": "fade-in 0.3s ease-out",
-        "slide-in": "slide-in 0.3s ease-out",
-      },
+      maxWidth: { feed: "600px" },
     },
   },
   plugins: [require("tailwindcss-animate")],

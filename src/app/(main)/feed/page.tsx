@@ -1,108 +1,59 @@
-"use client";
-
+﻿"use client";
 import { useState } from "react";
-import { PostComposer } from "@/components/feed/post-composer";
-import { PostCard } from "@/components/feed/post-card";
-import { TrendingSidebar } from "@/components/feed/trending-sidebar";
-import { POST_CATEGORIES } from "@/types/database";
 
-// TODO: Supabaseからリアルタイムで取得する
-const MOCK_POSTS = [
-  {
-    id: "1",
-    nickname: "Yuki.T",
-    avatar_url: null,
-    category: "成果報告",
-    content:
-      "今月MNP獲得が過去最高を更新しました！32件。ポイントは「乗り換え後の生活がどう変わるか」を具体的に伝えること。料金の安さだけじゃなく、使い方まで提案すると信頼されます！",
-    likes_count: 48,
-    comments_count: 12,
-    hashtags: ["#MNP獲得テク", "#au"],
-    expires_at: new Date(Date.now() + 18 * 60 * 60 * 1000).toISOString(),
-    is_pinned: false, image_url: null,
-    created_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: "2",
-    nickname: "Ken.M",
-    avatar_url: null,
-    category: "ノウハウ",
-    content:
-      "光回線の提案で悩んでいる方へ。「スマホの料金は下がらないけど、お家のネット代は下がりますよ」という切り口が最近刺さります。実際に月々の約7割がこのトークで決まってます。",
-    likes_count: 31,
-    comments_count: 8,
-    hashtags: ["#光回線", "#提案テク"],
-    expires_at: new Date(Date.now() + 12 * 60 * 60 * 1000).toISOString(),
-    is_pinned: false, image_url: null,
-    created_at: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(),
-  },
-  {
-    id: "3",
-    nickname: "Saki.H",
-    avatar_url: null,
-    category: "愚痴",
-    content:
-      "また月末のノルマ変更。先月達成したのに基準上げるのやめてほしい。頑張っても報われない感じがしんどい…同じ気持ちの人いますか？",
-    likes_count: 89,
-    comments_count: 24,
-    hashtags: ["#ノルマ", "#愚痴"],
-    expires_at: new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString(),
-    is_pinned: false, image_url: null,
-    created_at: new Date(Date.now() - 14 * 60 * 60 * 1000).toISOString(),
-  },
+const POSTS = [
+  { id: "1", name: "Yuki.T", category: "Tips", content: "MNP 32 cases this month! Key: explain how life changes after switching, not just price.", likes: 48, comments: 12, time: "2h", hashtags: ["#MNP", "#au"] },
+  { id: "2", name: "Ken.M", category: "Tips", content: "For fiber optic sales: 'Your phone bill stays the same, but your home internet bill drops.' 70% close rate with this approach.", likes: 31, comments: 8, time: "8h", hashtags: ["#fiber", "#sales"] },
+  { id: "3", name: "Saki.H", category: "Vent", content: "Quota changed again at month end. Hit target last month, now the bar is higher. Anyone else feeling this?", likes: 89, comments: 24, time: "14h", hashtags: ["#quota", "#vent"] },
 ];
 
 export default function FeedPage() {
-  const [activeCategory, setActiveCategory] = useState<string>("すべて");
-
-  const categories = ["すべて", ...POST_CATEGORIES];
-
-  const filtered =
-    activeCategory === "すべて"
-      ? MOCK_POSTS
-      : MOCK_POSTS.filter((p) => p.category === activeCategory);
-
+  const [liked, setLiked] = useState<Record<string, boolean>>({});
   return (
-    <div className="flex gap-5">
-      {/* Main feed */}
-      <div className="flex-1 min-w-0 space-y-4">
-        {/* Post Composer */}
-        <PostComposer />
-
-        {/* Category Filter */}
-        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={cn(
-                "px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors",
-                activeCategory === cat
-                  ? "bg-brand-dark text-white"
-                  : "bg-card border text-muted-foreground hover:bg-muted"
-              )}
-            >
-              {cat}
-            </button>
-          ))}
+    <div>
+      {/* Composer */}
+      <div className="border-b p-4">
+        <div className="flex gap-3">
+          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold text-sm shrink-0">Y</div>
+          <input placeholder="Share a tip or thought..." className="flex-1 bg-transparent text-sm focus:outline-none placeholder:text-muted-foreground" />
         </div>
-
-        {/* Posts */}
-        <div className="space-y-3">
-          {filtered.map((post) => (
-            <PostCard key={post.id} post={post} />
-          ))}
+        <div className="flex justify-between items-center mt-3 pl-[52px]">
+          <span className="text-xs text-muted-foreground">Disappears in 24h</span>
+          <button className="px-4 py-1.5 bg-primary text-primary-foreground rounded-full text-xs font-semibold hover:opacity-90 transition">Post</button>
         </div>
       </div>
-
-      {/* Right sidebar */}
-      <div className="hidden lg:block w-72 shrink-0">
-        <TrendingSidebar />
-      </div>
+      {/* Posts */}
+      {POSTS.map((post) => (
+        <article key={post.id} className="border-b p-4 hover:bg-secondary/30 transition-colors">
+          <div className="flex gap-3">
+            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold text-sm shrink-0">{post.name[0]}</div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-0.5">
+                <span className="font-semibold text-sm">{post.name}</span>
+                <span className="text-xs text-muted-foreground">{post.time}</span>
+                <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-full">{post.category}</span>
+              </div>
+              <p className="text-sm leading-relaxed mb-2">{post.content}</p>
+              <div className="flex items-center gap-1 mb-2.5">
+                {post.hashtags.map((tag, i) => (<span key={i} className="text-xs text-primary font-medium">{tag} </span>))}
+              </div>
+              <div className="flex items-center gap-6">
+                <button onClick={() => setLiked(p => ({...p, [post.id]: !p[post.id]}))} className="flex items-center gap-1.5 text-muted-foreground hover:text-red-500 transition text-sm">
+                  <svg className="w-4 h-4" fill={liked[post.id] ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" /></svg>
+                  <span>{post.likes + (liked[post.id] ? 1 : 0)}</span>
+                </button>
+                <button className="flex items-center gap-1.5 text-muted-foreground hover:text-primary transition text-sm">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z" /></svg>
+                  <span>{post.comments}</span>
+                </button>
+                <button className="flex items-center gap-1.5 text-muted-foreground hover:text-accent transition text-sm">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" /></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+      ))}
     </div>
   );
-}
-
-function cn(...classes: (string | boolean | undefined)[]) {
-  return classes.filter(Boolean).join(" ");
 }
