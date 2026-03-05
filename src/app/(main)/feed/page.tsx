@@ -19,7 +19,7 @@ const MOCK_POSTS = [
     comments_count: 12,
     hashtags: ["#MNP獲得テク", "#au"],
     expires_at: new Date(Date.now() + 18 * 60 * 60 * 1000).toISOString(),
-    is_pinned: false,
+    is_pinned: false, image_url: null,
     created_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
   },
   {
@@ -33,7 +33,7 @@ const MOCK_POSTS = [
     comments_count: 8,
     hashtags: ["#光回線", "#提案テク"],
     expires_at: new Date(Date.now() + 12 * 60 * 60 * 1000).toISOString(),
-    is_pinned: false,
+    is_pinned: false, image_url: null,
     created_at: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(),
   },
   {
@@ -47,7 +47,7 @@ const MOCK_POSTS = [
     comments_count: 24,
     hashtags: ["#ノルマ", "#愚痴"],
     expires_at: new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString(),
-    is_pinned: false,
+    is_pinned: false, image_url: null,
     created_at: new Date(Date.now() - 14 * 60 * 60 * 1000).toISOString(),
   },
 ];
