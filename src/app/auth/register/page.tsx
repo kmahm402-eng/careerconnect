@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 export default function RegisterPage() {
-  const [step, setStep] = useState<"type" | "form">("type");
-  const [userType, setUserType] = useState<"seeker" | "company">("seeker");
+  const [step, setStep] = useState("type");
+  const [userType, setUserType] = useState("seeker");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
@@ -19,9 +19,7 @@ export default function RegisterPage() {
     e.preventDefault();
     setLoading(true);
     setError("");
-
     const supabase = createClient();
-
     const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
@@ -30,13 +28,11 @@ export default function RegisterPage() {
         emailRedirectTo: `${window.location.origin}/auth/callback`,
       },
     });
-
     if (signUpError) {
       setError(signUpError.message);
       setLoading(false);
       return;
     }
-
     if (data.user) {
       if (userType === "seeker") {
         // @ts-ignore
@@ -54,7 +50,6 @@ export default function RegisterPage() {
         });
       }
     }
-
     router.push("/feed");
     router.refresh();
   };
@@ -72,54 +67,32 @@ export default function RegisterPage() {
               <span className="font-extrabold text-brand-gold text-xl">Connect</span>
             </Link>
           </div>
-
           <div className="bg-white rounded-2xl p-8 shadow-2xl">
-            <h1 className="text-2xl font-bold text-center mb-2">新規登録</h1>
-            <p className="text-gray-500 text-center text-sm mb-8">
-              アカウントタイプを選択してください
-            </p>
-
+            <h1 className="text-2xl font-bold text-center mb-2">New Registration</h1>
+            <p className="text-gray-500 text-center text-sm mb-8">Select your account type</p>
             <div className="space-y-4">
-              {[
-                {
-                  type: "seeker" as const,
-                  icon: "👤",
-                  title: "個人�E�スタチE���E�E,
-                  desc: "匿名で投稿・交流。企業からスカウトを受け取れます、E,
-                },
-                {
-                  type: "company" as const,
-                  icon: "🏢",
-                  title: "企業�E�代琁E��！E,
-                  desc: "企業ペ�Eジを作�Eし、優秀な人材に直接アプローチ、E,
-                },
-              ].map((opt) => (
-                <button
-                  key={opt.type}
-                  onClick={() => {
-                    setUserType(opt.type);
-                    setStep("form");
-                  }}
-                  className="w-full p-5 rounded-xl border-2 border-gray-200 hover:border-brand-gold text-left transition group"
-                >
-                  <div className="flex items-start gap-4">
-                    <span className="text-3xl">{opt.icon}</span>
-                    <div>
-                      <h3 className="font-bold text-lg group-hover:text-brand-cta transition">
-                        {opt.title}
-                      </h3>
-                      <p className="text-gray-500 text-sm mt-1">{opt.desc}</p>
-                    </div>
+              <button onClick={() => { setUserType("seeker"); setStep("form"); }} className="w-full p-5 rounded-xl border-2 border-gray-200 hover:border-brand-gold text-left transition group">
+                <div className="flex items-start gap-4">
+                  <span className="text-3xl">&#x1F464;</span>
+                  <div>
+                    <h3 className="font-bold text-lg group-hover:text-brand-cta transition">Individual (Staff)</h3>
+                    <p className="text-gray-500 text-sm mt-1">Post and interact anonymously. Receive scout messages from companies.</p>
                   </div>
-                </button>
-              ))}
+                </div>
+              </button>
+              <button onClick={() => { setUserType("company"); setStep("form"); }} className="w-full p-5 rounded-xl border-2 border-gray-200 hover:border-brand-gold text-left transition group">
+                <div className="flex items-start gap-4">
+                  <span className="text-3xl">&#x1F3E2;</span>
+                  <div>
+                    <h3 className="font-bold text-lg group-hover:text-brand-cta transition">Company (Agency)</h3>
+                    <p className="text-gray-500 text-sm mt-1">Create a company page and directly approach talented people.</p>
+                  </div>
+                </div>
+              </button>
             </div>
-
             <p className="text-center text-sm text-gray-500 mt-6">
-              既にアカウントをお持ちの方は
-              <Link href="/auth/login" className="text-brand-cta font-semibold ml-1 hover:underline">
-                ログイン
-              </Link>
+              Already have an account?
+              <Link href="/auth/login" className="text-brand-cta font-semibold ml-1 hover:underline">Login</Link>
             </p>
           </div>
         </div>
@@ -139,81 +112,24 @@ export default function RegisterPage() {
             <span className="font-extrabold text-brand-gold text-xl">Connect</span>
           </Link>
         </div>
-
         <div className="bg-white rounded-2xl p-8 shadow-2xl">
-          <button
-            onClick={() => setStep("type")}
-            className="text-sm text-gray-400 hover:text-gray-600 mb-4 flex items-center gap-1"
-          >
-            ↁEタイプ選択に戻めE          </button>
-
-          <h1 className="text-2xl font-bold mb-1">
-            {userType === "seeker" ? "個人アカウンチE : "企業アカウンチE}の作�E
-          </h1>
-          <p className="text-gray-500 text-sm mb-6">無料で始められまぁE/p>
-
-          {error && (
-            <div className="bg-red-50 text-red-600 text-sm p-3 rounded-lg mb-4">
-              {error}
-            </div>
-          )}
-
+          <button onClick={() => setStep("type")} className="text-sm text-gray-400 hover:text-gray-600 mb-4 flex items-center gap-1">Back</button>
+          <h1 className="text-2xl font-bold mb-1">{userType === "seeker" ? "Individual Account" : "Company Account"}</h1>
+          <p className="text-gray-500 text-sm mb-6">Free to get started</p>
+          {error && <div className="bg-red-50 text-red-600 text-sm p-3 rounded-lg mb-4">{error}</div>}
           <form onSubmit={handleRegister} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                {userType === "seeker" ? "ニックネ�Eム" : "企業吁E}
-              </label>
-              <input
-                type="text"
-                value={nickname}
-                onChange={(e) => setNickname(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-gold/50 focus:border-brand-gold transition"
-                placeholder={userType === "seeker" ? "匿名�Eニックネ�Eム" : "株式会社、E��E}
-                required
-              />
+              <label className="block text-sm font-medium text-gray-700 mb-1">{userType === "seeker" ? "Nickname" : "Company Name"}</label>
+              <input type="text" value={nickname} onChange={(e) => setNickname(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-gold/50 focus:border-brand-gold transition" required />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                メールアドレス
-              </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-gold/50 focus:border-brand-gold transition"
-                placeholder="you@example.com"
-                required
-              />
+              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-gold/50 focus:border-brand-gold transition" required />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                パスワーチE              </label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-gold/50 focus:border-brand-gold transition"
-                placeholder="8斁E��以丁E
-                minLength={8}
-                required
-              />
+              <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-gold/50 focus:border-brand-gold transition" minLength={8} required />
             </div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full py-3 bg-brand-cta text-white rounded-xl font-bold text-lg hover:bg-brand-cta-hover transition disabled:opacity-50 shadow-lg shadow-brand-cta/30"
-            >
-              {loading ? "登録中..." : "アカウントを作�E"}
+            <button type="submit" disabled={loading} className="w-full py-3 bg-brand-cta text-white rounded-xl font-bold text-lg hover:bg-brand-cta-hover transition disabled:opacity-50 shadow-lg shadow-brand-cta/30">
+              {loading ? "Creating..." : "Create Account"}
             </button>
-          </form>
-
-          <p className="text-xs text-gray-400 text-center mt-4">
-            登録することで
-            <span className="underline cursor-pointer">利用規紁E/span>と
-            <span className="underline cursor-pointer">プライバシーポリシー</span>
-            に同意したことになりまぁE          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
