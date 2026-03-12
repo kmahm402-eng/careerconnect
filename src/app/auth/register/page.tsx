@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -38,35 +38,21 @@ export default function RegisterPage() {
 
   if (step === "type") {
     return (
-      <div className="min-h-screen bg-brand-dark flex items-center justify-center px-4">
+      <div className="min-h-screen bg-background flex items-center justify-center px-4">
         <div className="w-full max-w-md">
-          <div className="text-center mb-8">
-            <Link href="/" className="inline-flex items-center gap-2">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-gold to-brand-gold-light flex items-center justify-center">
-                <span className="text-brand-dark font-black text-xl">C</span>
-              </div>
-              <span className="font-extrabold text-white text-xl">Career</span>
-              <span className="font-extrabold text-brand-gold text-xl">Connect</span>
-            </Link>
-          </div>
-          <div className="bg-white rounded-2xl p-8 shadow-2xl">
-            <h1 className="text-2xl font-bold text-center mb-2">New Registration</h1>
-            <p className="text-gray-500 text-center text-sm mb-8">Select your account type</p>
+          <div className="text-center mb-8"><Link href="/" className="font-bold text-2xl text-primary">CareerConnect</Link></div>
+          <div className="bg-card rounded-2xl border p-8 shadow-soft">
+            <h1 className="text-2xl font-bold text-center mb-2">新規登録</h1>
+            <p className="text-muted-foreground text-center text-sm mb-8">アカウントの種類を選択してください</p>
             <div className="space-y-4">
-              <button onClick={() => { setUserType("seeker"); setStep("form"); }} className="w-full p-5 rounded-xl border-2 border-gray-200 hover:border-brand-gold text-left transition group">
-                <div className="flex items-start gap-4">
-                  <span className="text-3xl">&#x1F464;</span>
-                  <div><h3 className="font-bold text-lg group-hover:text-brand-cta transition">Individual (Staff)</h3><p className="text-gray-500 text-sm mt-1">Post and interact anonymously.</p></div>
-                </div>
+              <button onClick={() => { setUserType("seeker"); setStep("form"); }} className="w-full p-5 rounded-xl border-2 border-border hover:border-primary text-left transition group">
+                <div className="flex items-start gap-4"><span className="text-3xl">\u{1F464}</span><div><h3 className="font-bold text-lg group-hover:text-primary transition">個人（スタッフ）</h3><p className="text-muted-foreground text-sm mt-1">匿名で投稿・交流。企業からスカウトDMを受け取れます。</p></div></div>
               </button>
-              <button onClick={() => { setUserType("company"); setStep("form"); }} className="w-full p-5 rounded-xl border-2 border-gray-200 hover:border-brand-gold text-left transition group">
-                <div className="flex items-start gap-4">
-                  <span className="text-3xl">&#x1F3E2;</span>
-                  <div><h3 className="font-bold text-lg group-hover:text-brand-cta transition">Company (Agency)</h3><p className="text-gray-500 text-sm mt-1">Create a company page and scout talent.</p></div>
-                </div>
+              <button onClick={() => { setUserType("company"); setStep("form"); }} className="w-full p-5 rounded-xl border-2 border-border hover:border-primary text-left transition group">
+                <div className="flex items-start gap-4"><span className="text-3xl">\u{1F3E2}</span><div><h3 className="font-bold text-lg group-hover:text-primary transition">企業（代理店）</h3><p className="text-muted-foreground text-sm mt-1">企業ページを作成し、優秀な人材に直接アプローチ。</p></div></div>
               </button>
             </div>
-            <p className="text-center text-sm text-gray-500 mt-6">Already have an account? <Link href="/auth/login" className="text-brand-cta font-semibold ml-1 hover:underline">Login</Link></p>
+            <p className="text-center text-sm text-muted-foreground mt-6">すでにアカウントをお持ちの方は <Link href="/auth/login" className="text-primary font-semibold hover:underline">ログイン</Link></p>
           </div>
         </div>
       </div>
@@ -74,27 +60,19 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-brand-dark flex items-center justify-center px-4">
+    <div className="min-h-screen bg-background flex items-center justify-center px-4">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-gold to-brand-gold-light flex items-center justify-center">
-              <span className="text-brand-dark font-black text-xl">C</span>
-            </div>
-            <span className="font-extrabold text-white text-xl">Career</span>
-            <span className="font-extrabold text-brand-gold text-xl">Connect</span>
-          </Link>
-        </div>
-        <div className="bg-white rounded-2xl p-8 shadow-2xl">
-          <button onClick={() => setStep("type")} className="text-sm text-gray-400 hover:text-gray-600 mb-4">Back</button>
-          <h1 className="text-2xl font-bold mb-1">{userType === "seeker" ? "Individual Account" : "Company Account"}</h1>
-          <p className="text-gray-500 text-sm mb-6">Free to get started</p>
-          {error && <div className="bg-red-50 text-red-600 text-sm p-3 rounded-lg mb-4">{error}</div>}
+        <div className="text-center mb-8"><Link href="/" className="font-bold text-2xl text-primary">CareerConnect</Link></div>
+        <div className="bg-card rounded-2xl border p-8 shadow-soft">
+          <button onClick={() => setStep("type")} className="text-sm text-muted-foreground hover:text-foreground mb-4">\u2190 戻る</button>
+          <h1 className="text-2xl font-bold mb-1">{userType === "seeker" ? "個人アカウント作成" : "企業アカウント作成"}</h1>
+          <p className="text-muted-foreground text-sm mb-6">無料で始められます</p>
+          {error && <div className="bg-destructive/10 text-destructive text-sm p-3 rounded-xl mb-4">{error}</div>}
           <form onSubmit={handleRegister} className="space-y-4">
-            <div><label className="block text-sm font-medium text-gray-700 mb-1">{userType === "seeker" ? "Nickname" : "Company Name"}</label><input type="text" value={nickname} onChange={(e) => setNickname(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-gold/50 transition" required /></div>
-            <div><label className="block text-sm font-medium text-gray-700 mb-1">Email</label><input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-gold/50 transition" required /></div>
-            <div><label className="block text-sm font-medium text-gray-700 mb-1">Password</label><input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-gold/50 transition" minLength={8} required /></div>
-            <button type="submit" disabled={loading} className="w-full py-3 bg-brand-cta text-white rounded-xl font-bold text-lg hover:bg-brand-cta-hover transition disabled:opacity-50">{loading ? "Creating..." : "Create Account"}</button>
+            <div><label className="block text-sm font-medium text-muted-foreground mb-1.5">{userType === "seeker" ? "ニックネーム" : "会社名"}</label><input type="text" value={nickname} onChange={(e) => setNickname(e.target.value)} className="w-full px-4 py-2.5 bg-secondary rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition" required /></div>
+            <div><label className="block text-sm font-medium text-muted-foreground mb-1.5">メールアドレス</label><input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-4 py-2.5 bg-secondary rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition" required /></div>
+            <div><label className="block text-sm font-medium text-muted-foreground mb-1.5">パスワード</label><input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-4 py-2.5 bg-secondary rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition" minLength={8} required /></div>
+            <button type="submit" disabled={loading} className="w-full py-2.5 bg-primary text-primary-foreground rounded-xl font-semibold text-sm hover:opacity-90 transition disabled:opacity-50">{loading ? "作成中..." : "アカウントを作成"}</button>
           </form>
         </div>
       </div>
