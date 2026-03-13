@@ -12,7 +12,7 @@ export default function MessagesPage() {
       <div className="px-4 py-3 border-b"><h1 className="text-lg font-semibold">メッセージ</h1></div>
       <div className="divide-y">
         {CHATS.map((chat) => (
-          <Link key={chat.id} href={"/messages/" + chat.id} className="flex items-center gap-3 px-4 py-3.5 hover:bg-secondary/30 transition-colors">
+          <Link key={chat.id} href={`/messages/${chat.id}`} className="flex items-center gap-3 px-4 py-3.5 hover:bg-secondary/30 transition-colors">
             <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold shrink-0">{chat.name[0]}</div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-1.5">
@@ -24,7 +24,7 @@ export default function MessagesPage() {
                 <p className="text-xs text-muted-foreground truncate">{chat.lastMessage}</p>
                 {chat.unread > 0 && (<span className="bg-primary text-primary-foreground text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shrink-0">{chat.unread}</span>)}
               </div>
-              {chat.bonus && (<span className="inline-flex items-center gap-1 mt-1 text-[11px] font-medium text-amber-600">\u{1F381} 入社祈い金 {(chat.bonus / 10000).toFixed(0)}万円</span>)}
+              {chat.bonus && (<span className="inline-flex items-center gap-1 mt-1 text-[11px] font-medium text-amber-600">入社祈い金 {(chat.bonus / 10000).toFixed(0)}万円</span>)}
             </div>
           </Link>
         ))}
